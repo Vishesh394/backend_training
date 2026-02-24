@@ -1,0 +1,106 @@
+npm install nodemon
+
+nodemon index.js
+
+var, let and const
+
+var: global scope
+let : 
+const:
+------------------------------------------
+Template literals or backticks(` `) //from es6 - can print variable and string together
+
+==================23 Feb 2026 ===============
+Synchronous:(Blocking): 
+Async: means our program can start a task that takes time(like API calls ,file read, DB query)
+        without blocking the rest of the code. So that program doen't wait and freez. it continue doing other work.
+callback, promise, async/await: 
+# Promise: in js is a way to handle the asynchronous operation
+            represents a value that may be avoilable now, later or never.
+            can be in one of 3 state:
+                1.pending: operation still ongoing(initial state)
+                2.fullfilled: operation completed successfully
+                3.rejected: operation failed
+    -Creating a promise and consuming a promise with .then() and .catch()
+            fetch('https://fakestoreapi.com/products')
+                .then(response => response.json())
+                .then(data => console.log(data));
+
+
+
+# async and await:
+    aync make a function return a promise 
+    await pause the execution inside an async function until the promise is resolved or rejected
+    
+    Live example: Payment system(payment gateways)
+
+==================Node.js ==========
+is a js runtime environment that allows us to run js outside the browser, mainly on server
+
+Before Node.js:
+-JS only worked inside browsers
+
+After Node.js:
+-Js can run on servers
+-You can build APIs, backend systems and real-time application
+
+#Node.js is build on: V8 engine- executes js
+                            - open source high performance js and webassembly engine developed by google.
+                            -compiles js directly into native machine code
+                            - enabling fast execution in browser and other environments
+                            - initially designed for google chrome, it now powers platforms like Node.js
+
+#libuv: -asynchronous I/O operations and manages thread pool.
+
+
+        -
+         
+        console.log("Start")
+        setTimeout(()=>{
+            console.log("Timer")   //libuv handles timer internally.
+        }, 5000)
+        console.log("end")
+
+        Call Stack:
+            console.log("Start") -> prints Start
+            setTimeout -> sent to libuv
+            console.log("End") -> prints End
+
+            Timer finishes-> goes to CallBack Queue
+
+            Event Loop checks -> Call Stack empty
+            Push callback -> prints Timer
+
+===== INternal working of sysnchronous operations=====
+
+User Request --> Node Server --> V8 executes JS --> if Sync->Call Stack  -->libuv handles via: -Thread pool  --> Callback added to Queue  --> Event loop execcutes Callback
+                                                    if async -> libuv                          -OS networking
+
+Node.js mode it possible to:
+-Use JavaScript for both frontend and backend
+
+Local(Custom) modules:
+We can create our own module and export function or variables
+math.Js
+app.js
+
+#Core(built-in) Modules:
+These come with Node.js. No installation needed
+
+
+fs(File system)
+
+========================== PATH MODULES ================
+-work with file and directory path
+#Absolute path & relative path 
+-absolute path : complete path of a file 
+                C:\Users\LENOVO\OneDrive\Desktop\Backend(training)\backend
+-Reltive path : path according to the current working directory
+                backend/app.js
+
+
+backend/data(folder)/user.json
+
+
+
+
