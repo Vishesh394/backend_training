@@ -4,9 +4,14 @@ nodemon index.js
 
 var, let and const
 
-var: global scope
-let : 
-const:
+var: (function scope or global scope)
+    -can be re-declared
+    -can be re-assigned
+let : (Modern JS- ES6)-block scoped({})
+                    - can't be re-declared in same scope
+                    -can be re-assigned
+const:(Constants-ES6)- Block scoped 
+                    - can't be redeclared and can't be reassigned
 ------------------------------------------
 Template literals or backticks(` `) //from es6 - can print variable and string together
 
@@ -16,7 +21,7 @@ Async: means our program can start a task that takes time(like API calls ,file r
         without blocking the rest of the code. So that program doen't wait and freez. it continue doing other work.
 callback, promise, async/await: 
 # Promise: in js is a way to handle the asynchronous operation
-            represents a value that may be avoilable now, later or never.
+            represents a value that may be available now, later or never.
             can be in one of 3 state:
                 1.pending: operation still ongoing(initial state)
                 2.fullfilled: operation completed successfully
@@ -78,17 +83,24 @@ User Request --> Node Server --> V8 executes JS --> if Sync->Call Stack  -->libu
 
 Node.js mode it possible to:
 -Use JavaScript for both frontend and backend
-
-Local(Custom) modules:
+======================== MODULES ===========
+#Local(Custom) modules:
 We can create our own module and export function or variables
 math.Js
 app.js
 
 #Core(built-in) Modules:
 These come with Node.js. No installation needed
+===============+++++++CRUD OPERATION +++++++++++++++++++++++++++++
 
+===============fs(File system) MODULE=========
+-fs.mkdir('folder_name')   : creating folder
+-fs.writeFile("folder/file_name", 'content_in_file')  :- creating file
+-fs.readFile("relative_path", 'encoding', handle error and data with error)  :-read file 
+-fs.appendFile("relative_path/file_name", "content to write in file")  :- append file
+-fs.unlink("relative_path", error)   : deleting the file
 
-fs(File system)
+//24-FEB-2026
 
 ========================== PATH MODULES ================
 -work with file and directory path
@@ -101,6 +113,177 @@ fs(File system)
 
 backend/data(folder)/user.json
 
+====================== OS modules =================
+
+-os.platforms() :return the platform of system
+-os.arch() : return the system architecture
+-os.cpus().length : return the cores in cpu
+-os.totalmem  : return the total memory in bytes
+-(os.totalmem()/(1024**)).toFixed(2) :return the total memory in GB
+            : coz 1 byte= 8 bits
+                  1 KB =(1024) bytes
+                  1 MB =(1024)^2 bytes
+                  1 GB =(1024)^3 bytes
+            -we divide totalmem in bytes by (1024)^3 so we can get totalmem in GB
+            -.toFixed(2) : upto 2 decimal place 
+-os.freemem() : return free memory(RAM) in the system (in bytes)
+
+                  
+==================== HTTP Modules ================= 
+
+this module is predefined in NodeJS
+-create HTTP servers and client:
+-client sends-> request to server and server ->response to client
+#Internal working of client server :
+ client(browser) --> http request --> NodeJS server(http module)--> http response --> client see output
+
+-syntax:
+http.createServer((req,res)=>{ })
+server.listen(PORT,()=>pass a message with link of local host)
+
+============= Routing Multiple pages =================
+
+routing in html: using anchor tag
+
+-how server response to the client response.
+
+#setting response header:
+200 for success
+404 for error 
+500 for server error
+-to send html 
+
+#express : used for frontend - although we can do frontend with the help of react but with expresS it is light weight
+            -EJS - express template engine
+
+//25-FEB-2026
+===================== JSON Placeholder ========================
+json= javascript object notation
+two type of objects: j
+https://jsonplaceholder.typicode.com
+api.json
+send it to url
+
+now, app.js
+show the data on url with the help of fs module:
+1. fs.require('fs')
+2.fs.readFile(dir)
+
+############====== EXPRESS.JS ========================
+
+Express.js : web framework for Node.js 
+           :helps in: -create webserver
+            -handle request(GET,POST etc)
+            -build APIs and websites
+
+web1(folder)/server.js
+now, on terminal
+    -cd web1
+    -npm init -y (created package.json- contains registery of npm)
+    -npm i express ()
+
+Now, # server.js:
+=================== Routing in express=============
+can do in node and express : but when we do it in express without usinf "http" modules
+inside , server.js 
+
+
+================Rendering HTML in express===========
+web(folder)
+    -public(folder)
+        -index.html
+        -about.html
+
+-Key  notes: res.send(path.join(__dirname, ' public', 'index.html' ))
+//26-FEB-2026
+===============Thunder client ================
+-Thunder Client is basically your API testing buddy inside VS Code
+-It lets you hit your Express routes (GET, POST, PUT, DELETE) without using Postman.
+-vs code extension to test RestAPI
+-we can:
+    >Send GET/POST requests
+    >Pass params, query, body
+    >Check JSON responses
+    >Debug our Express backend
+#REST API(Representational State Transfer):
+    a way for frontend(client) and backend(server) to communicate with each other over the internet using http requests.
+
+
+========= QUERY STRINGS AND URL ID'S(ROUTE PARAMETERS)===============
+URL ID's(Route params): -part of url path
+                        -defined using a colon: in the route path
+                        - identify specific resource(a user, tasks or product)
+                        -used: to fetch one specific item
+                               to delete/update specific record
+ex: app.get("/user/:id",(req,res)=>{ //passing parameters
+    const taskId=req.params.id 
+    res.json({
+        Message: "task fetched",
+        id: taskId
+    })
+})
+
+url: http://localhost:5000/users/10
+OUTPUT(RESPONSE):
+            {
+                "Message": "Task Fetched",
+                "id": "10"
+            }
+
+=============  Multiple route parameter(URL parameter) ====================
+example url: http://localhost:5000/users/23/post/5
+or example url: http://localhost:5000/contacts/222344442323/posts/32
 
 
 
+========Validating parameters===========
+=======Query parameters in Express.js ==============
+-are key-value pairs added at the end of URL to filter, sort or customize 
+const express=require("express")
+const path=require('path')
+const app=express()
+// const PORT=5000
+// const staticPath=path.join(__dirname,'public')
+app.get("/users/:userId",(req,res)=>{
+    const userId=parseInt(req.params.userId)
+    if(isNaN(userId)){
+        return res.json({
+            message:"Invalid Id"
+        })
+    }
+})
+app.get("/tasks",(req,res)=>{
+    res.json(req.query)
+})
+app.listen(5000,()=>{
+    console.log("server is running on http://localhost:5000")
+})
+thunder client: 
+https://localhost:5000/tasks?status=completed&priority=high
+
+
+====================Task Problem:1 ===============
+   
+http://localhost:5000/tasks :shows all the tasks
+http://localhost:5000/taks?completed=true : shows all task complete=true 
+http://localhost:5000/tasks?complete=true&limit=2 : home assignment??
+
+
+
+
+========Middle ware====== ***IMPORTANT****
+-is a function
+-that runs between receiving a request and sending a response
+-it decides  whether to continue or stop the request
+- every middleware function has 3 parameter: 
+    (req, res, next)
+    parameters       meaning
+    req              incoming request 
+    res              response we send back 
+    next             function to move to next step
+
+- function middleware(req, res, next){
+    //code 
+    next()  //pass control to next middleware
+}
+- if next() is not called, the request 

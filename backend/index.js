@@ -45,9 +45,7 @@ const wish=function(message){
 wish("hello students")
 
 //arrow function:
-
-**/
-
+*/
 //====================Diff b/w name , arrow ==================
 //name function: return statement is required 
 function add(n1,n2){
