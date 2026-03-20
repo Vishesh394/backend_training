@@ -1,0 +1,14 @@
+create a mew folder
+server.js
+npm init -y
+npm i express mongoose dotenv bcrptjs jsonwebtoken express-session
+
+
+.env 
+MONGO_URI=mongodb://127.0.0.1:27017/dbsession
+JWT_SECRET=abczxyghjpoi
+PORT=5000
+
+config/db.js
+const mongoose=require("mongoose")
+const connectDB=async()=>

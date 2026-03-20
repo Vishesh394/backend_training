@@ -64,7 +64,7 @@ app.listen(PORT,()=>{
 
 // ======Multiple parameter =======
 
-// /* NOT WORKING----
+/* NOT WORKING----
 
 
 const express=require("express")
@@ -85,7 +85,7 @@ app.get("contact/:contactId/post/:postId", (req,res)=>{
 app.listen(5000,()=>{
     console.log("server is running on http://localhost:5000")
 })
-// */
+*/
 
 //======vaidating parameter===============
 // ........................
@@ -156,3 +156,126 @@ app.listen(5000,()=>{
 })
 
 */
+
+//27-FEB-2026
+//=================== ASSIGNMENT: 2 ==============
+/* Incomplete: have to do for other urls
+const express=require("express")
+const app=express()
+const products=[
+    {pid:1,title:"monitor",price:4999},
+    {pid:2,title:"keyboard",price:999},
+    {pid:3,title:"mouse",price:499},
+    {pid:4,title:"speakers",price:1499},
+    {pid:5,title:"hrad-phones",price:599},
+]
+//route
+
+app.get("/products",(req,res)=>{
+    // console.log(req.query)
+    let filteredProducts=[...products]
+    if(req.query.maxPrice){
+        const maxPrice=parseFloat(req.query.maxPrice)
+        filteredProducts=filteredProducts.filter(
+            (product)=> product.price<maxPrice
+        )
+    }
+    res.json(filteredProducts)
+  
+   
+})
+app.listen(5000,()=>{
+    console.log("the server is responding on http://localhost:5000")
+
+})
+*/
+
+//================= Middle ware : ex: AGE DETECTOR ======
+/*
+const express=require('express')
+const app=express()
+const ageDetector=(req,res,next)=>{
+    const age=parseInt(req.query.age)
+    if(age<18){
+        return res.json({message:"You are under age!!"+"You must be 18+"})
+    }
+    next()
+}
+app.get("/auth", ageDetector,(req,res)=>{
+    res.json({message:"Access Granted!"})
+})
+app.listen(5000,(req,res)=>{
+    console.log("the server is runng on http://localhost:5000 ")
+})
+*/
+//==============Middle ware for login check ==========
+/*
+const express=require('express')
+const app=express()
+const checkAuthentication=(req,res,next)=>{
+    const isLoggedIn =req.query.isLoggedIn
+    if(isLoggedIn!=="true"){
+        return  res.send("Unauthorized!! You are not logged In")
+    }
+    next()
+}
+app.get("/dashboard", checkAuthentication,(req,res)=>{
+    res.json({Message:"Welcomwe to dashboard"})
+})
+app.listen(5000,(req,res)=>{
+    "the server is runnig on : http://localhost:5000"
+})
+*/
+
+//==== passing query parameter for checking authentication====
+/*
+1. pass the user id and passward
+2. if id and passs invalid res= message: invlaid user id or password
+3.if both are correct the next() dashboard and pass message as welcome to dash board
+*/
+/* NOT WORKING ------
+
+const express=require ('express')
+const app=express()
+const checkAuthentication=(req,res)=>{
+    const pass=req.query
+if(pass!="pass234")
+    {
+        return res.json({Message:"Invalid or missing password!!"})
+    }
+    next()
+}
+
+app.get("/dashboard",checkAuthentication,(req,res)=>{
+    res.json({Message: "welcome to dashboard :D"})
+})
+
+*/
+
+//*------------Crud Operation------------*
+//express crud without database
+//c-create
+//r-read
+//u-update
+//d-delete
+const express=require('express')
+const app=express()
+app.use(express.json())
+let productList=[]
+app.post("/createProducts",(req,res)=>{
+    const newProduct = {
+        pid:productList.length+1,
+        name:req.body.name,
+        price:req.body.price
+    }
+    productList.push(newProduct)
+    res.json({
+        message:"Product added successfully",
+        product : newProduct
+    })
+})
+app.listen(5000,()=>{
+    console.log("Server is running on port http://localhost:5000")
+})
+
+app.get

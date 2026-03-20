@@ -1,0 +1,150 @@
+CRUD OPERATION
+
+create
+read
+update
+delete
+================================
+11_MARCH_2026: 
+-------------
+create a new folder
+project3(folder)
+crud(folder)
+server.js
+
+now, project3/crud
+-npm init -y
+
+-npm i express mongoose dotenv
+
+create new file : .env
+- connect to mongoose 
+  MONGO_URI=......
+
+then
+create a folder: config(folder)/ db.js(file)
+
+now in, db.js(file):
+    const mongoose=require('mongoose');
+    const connectDB=async()=>{
+    try{
+        await mongoose.connect("mongodb://127.0.0.1:27017/db2")
+        console.log("MongoDB connected successfully");
+
+    }
+    catch(error){
+        console.error("MongoDB connection failed:", error)
+        process.exit(1);
+    }
+    }
+    module.exports=connectDB;
+
+---------------------------------------
+creating : models(folder)-> user.js(file)
+
+now, in user.js(file):
+
+    const mongoose=require("mongoose")
+
+    const userSchema=new mongoose.Schema({
+        fullname:{
+            type:String,
+            required:[true, "Full Name is required"],
+            minlength:[3,"Name must be atleast 3 characters"]  
+            },
+            email:{
+                type:String,
+                required:[true,"Email is required"],
+                unique: true
+            },
+            age:{
+                type:Number,
+                min:[18,"Age must be atleast 18"],
+                max:[60,"Age must be below 60"]
+            }
+        
+    })
+    module.exports=mongoose.model("User",userSchema)
+
+creating: middleware(folder)-> validateUser.js(file)
+
+now,In validateUser.js(file):
+    const User=require("../models/user")
+    const validateUser=async(req,res,next)=>{
+        try{
+            const user=new User(req.body)
+            await user.validate()
+            next()
+        }
+        catch(error){
+            res.json({
+                success:false,
+                errors: error
+            })
+        }
+    }
+    module.exports=validateUser
+
+creating: Controllers(folder) --> userControllers.js(file):
+
+    const User=require("../models/user")
+    exports.createUser=async(req,res)=>{
+        try{
+            const user=await User.create(req.body)
+            res.json(user)
+
+        }
+        catch(error){
+            res.json({
+                error:err.message
+            })
+
+        }
+    }
+
+- Create : routes(folder) -> userRoutes.js(file):
+Now, in userRoutes.js(file):
+    const express=require("express")
+    const router=express.Router()
+    const userController=require("../controllers/userControllers")
+    const validateUser=require("../middleware/validateUser")
+
+    router.post("/", validateUser, userController.createUser)
+
+
+    module.exports=router
+
+-So,Now in userControllers.js(file):
+  create CRUD operations:
+    //get all users
+    exports.getUsers=async(req,res)=>{
+        const users=await User.find()
+        res.json(users)
+    }
+
+    //get by id
+    exports.getUsers=async(req,res)=>{
+        const users=await User.findById(req.params.id)
+        res.json(users)
+    }
+
+    //update user 
+    exports.updateUsers=async(req,res)=>{d
+        const users=await User.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {new:true}
+        )
+        res.json(users)
+    }
+
+    //delete user
+    exports.deleteUsers=async(req,res)=>{
+        await User.findByIdAndDelete(req.params.id)
+        res.json({messsage:"User Deleted"})
+    } 
+
+
+now, in server.js(file):
+c
+

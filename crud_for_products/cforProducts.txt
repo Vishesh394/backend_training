@@ -1,0 +1,20 @@
+products
+-title
+-category
+-price
+-stock
+-rating
+
+create new folder:
+    -server.js
+    npm init -y
+    npm i express mongoose dotenv
+
+    .env
+    config/db.js
+    models/Product.js
+    middleware/validateProduct.js
+    controllers/productController.js
+    routes/productRoutes.js
+
+    server.js

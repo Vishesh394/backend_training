@@ -272,7 +272,7 @@ http://localhost:5000/tasks?complete=true&limit=2 : home assignment??
 
 
 ========Middle ware====== ***IMPORTANT****
--is a function
+-is a function (a website is not valid without middleware)
 -that runs between receiving a request and sending a response
 -it decides  whether to continue or stop the request
 - every middleware function has 3 parameter: 
@@ -287,3 +287,379 @@ http://localhost:5000/tasks?complete=true&limit=2 : home assignment??
     next()  //pass control to next middleware
 }
 - if next() is not called, the request 
+
+//27-FEB-2026
+// ASSIGNMENT: 2
+const products=[
+    {pid:1,title:"monitor",price:4999},
+    {pid:2,title:"keyboard",price:999},
+    {pid:3,title:"mouse",price:499},
+    {pid:4,title:"speakers",price:1499},
+    {pid:5,title:"hrad-phones",price:599},
+]
+using query parameters show products with price less than 1000
+
+fetch query through these URL :
+
+http://localhost:5000/products?maxPrice=1000
+http://localhost:5000/products?maxPrice=1000&limit=2
+http://localhost:5000/products?maxPrice=1000&minPrice=1500
+
+================= Creating middle ware ==============
+
+
+
+
+================ Mongo DB ======================
+-MongoDB is an open-source database developed by MongoDb, Inc.
+-MongoDB stores data in json like structre.
+It is a NoSQL database
+MongoDB used BSON(Binary Javascript Object Notation) to query database
+
+MySQL        MongoDB
+Table        Colllection
+Row          Document
+Column       Field 
+
+Using the mongooes library with MongoDB
+
+Schema can be known as the blueprint of the database
+
+Model used to interact with collection.
+
+================Connect MongoDB + Mongoose +Express ============
+1. Creating a node project:
+-mkdir mongodb-project
+-cd mongodb-project
+-npm init -y
+: this creates package.json
+
+2.Install required packages:
+-npm install express Mongoose
+- npm install nodemon
+
+3.Create Project structure:
+mongodb-project(Folder)
+|
+|--config(folder)/db.js(file)
+|--models(folder)/Products.js(file)
+|--server.js
+|--package.json
+
+4.Creat MongoDB connection(db.js):
+
+const express = require("express");
+const connectDB = require("./config/db");
+const app = express();
+
+// connect database
+connectDB();
+app.get("/", (req, res) => {
+  res.send("Server is running and MongoDB connected");
+});
+const PORT = 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+5. Create Express server:(server.js):
+const express = require("express");
+const connectDB = require("./config/db");
+const app = express();
+// connect database
+connectDB();
+app.get("/", (req, res) => {
+  res.send("Server is running and MongoDB connected");
+});
+const PORT = 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+6.Creating A mongoose model(model/product.js):
+const mongoose - require('mongoose')
+
+//creating the schema of our MongoDb data:
+const productSchema = new mongoose.Schema({
+  title: String,
+  category: String,
+  price: Number,
+  stock: Number,
+  rating: Number
+});
+module.exports = mongoose.model("Product", productSchema);
+
+7.Run the server:
+-start mongoDB fisrt
+-npx nodemon server.js
+
+## IMPORTANT:(Folder structure):
+config → database connection
+models → schemas
+routes → API routes
+controllers → logic
+server.js → main server
+
+================= 
+// 5-March-2026
+• For sorting in descending order : Product.find().sort({price:-1})
+• sorting in ascending order : Product.find().sort({price:1})
+
+--------------- Logial operator ----------------
+Logical Operator : $and - All conditions must be true
+
+condition1       condition2        result
+ T                   T                T
+ T                   F                F
+ F                   T                F
+ F                   F                F
+
+findById() is a built in method from mongooes used to fetch a single document by its
+
+//06-March-2026
+=====================REGULAR EXPRESSION ==================
+A Regular Expression (Regex) is a pattern used to search, match, or manipulate text.
+It is commonly used in programming, data validation, and text processing.
+
+| Symbol | Meaning              | Example                   |
+| ------ | -------------------- | ------------------------- |
+| `.`    | Any single character | `a.b` → aab, acb          |
+| `\d`   | Any digit            | 0–9                       |
+| `\w`   | Word character       | a–z, A–Z, 0–9             |
+| `\s`   | Space                | whitespace                |
+| `+`    | One or more          | `a+` → a, aa, aaa         |
+| `*`    | Zero or more         | `ab*` → a, ab, abb        |
+| `?`    | Optional             | `colou?r` → color, colour |
+| `^`    | Start of string      | `^Hello`                  |
+| `$`    | End of string        | `world$`                  |
+
+1.Creating the datamodel for students:
+(models(folder)/studentDB.js(file))
+2.now in server.js(file) add the data of 20 students(using POST api)
+3.Performing operations of regular expression.
+
+
+
+
+----------------------------------------
+ques: list all the student except name start with A
+2.get top two students
+3. list student age greater than 20 with course "computer science"
+4. list all students by skipping first 3 students
+5. list all student age greater than 20 and marks greater than 85
+
+//09-MARCH-2026
+//=============== AGGREGATION OF ALL(SCHEMA,MODEL,QUERY):================
+aggregate(): process documents through pipeline stages.
+Each stage takes input documents, performs an operation and passes the result to the net stage
+
+db.collection.aggregate([
+    {stage1},
+    {stage2},
+    {stage3}
+])
+
+#pipeline flow like:
+collection -> stage1 --> stage2 --> stage3 --> result
+
+steps:
+1. Creating model and schema in models(folder)-->orders.js(file)
+    and export the module using: module.export=Order
+2. in server.js(file) : import schema and model 
+                        -add the data in the database using POST API.
+                        -insertMany([....])
+                        -POST at http://localhost:5000/orders
+                        -data is inserted 
+3. now can check the data in the mongodb compass
+4:
+now in server.js(file): get the data:
+-Using Match filtering: $match : used in aggregation pipeline: i.e. work inside aggregate()
+                                syntax: aggregate([{$match:{}}])
+                        used to perform advance data processing like:
+                                grouping
+                                counting
+                                calculating averages
+                                transforming data
+- while find() is used for basic query
+
+-                  
+
+-------------------------------------------------------------------------
+TODO: MVC (Model View and Controller)
+
+
+//================== 10_MARCH_2026 ===================== 
+----------------- KEYS ----------------------------
+
+2. foreign key(reference key):
+mongoDB doesnot enforce foreign keys like SQL, but you can store another document's _id as a reference.
+for example: 
+user collection
+{
+    _id:ObjectId('1'),
+    "name":"Rahul"
+}
+orders collection
+{
+    _id:ObjectId('10'),
+    "product":"Laptop",
+    "userId":ObjectId("1")
+}
+userId --> reference users._id
+
+-NOW, create schema for users:
+ ADD USERS DATA IN DATABASE: using post api
+ 
+- create new schema for posts:
+
+//=================== validation Middle ware ==========
+validation with middleware:
+
+========================================================================
+
+In MongoDB, keys are fields used to uniqueliy identitfy documents, create relationship and improve performence.
+-keys: fields used to uniquely identify the document, create relationships and improve performance.
+1.PRIMARY KEY(_id):
+            - id associated with the document
+            - unique for every document
+            -defined by: _id
+            -mongodb automatically creates it
+            -usually stored as objectId
+            ex: 
+            _id ObjectId('69aa6ff0e07e94c6b8b6d34a')
+
+2. Foregin Key(reference keys)
+MongoDB does not enforce keys like SQL, but you can store another document's_id as a reference.
+for example:
+Users collection
+{
+    _id:ObjectId('1'),
+    "name":"Rahul"
+}
+orders collection
+{
+    _id:ObjectId('10'),
+    "product":"Laptop",
+    "userId":ObjectId("1")
+}
+userId --> reference user._id
+
+validators in mongooese : check if the data is correct before saveing it. it the data does not meet the rules. mongoose throws a validation error and the document is saved.
+
+1. required validator 
+name:{
+    type:string,
+    required:true
+}
+custom message:
+name:{
+    type:String,
+    required:[true:"Name is required"]
+}
+
+2. minLength validator:
+minimum number of character for strings.
+userName:{
+    type:String,
+    minLength:3
+}
+custom message:
+userName:{
+    type:String,
+    minLength:[3,"username must be at least 3 characters"]
+}
+
+3.maxlength validator
+maximum allowed characters
+userName:{
+    type:String,
+    maxlength:25
+}
+
+4.min validator
+minimum value for numbers or data
+age:{
+type:Number,
+max:18
+}
+
+5.max validator
+maximum value allowed.
+age:{
+    type:Number,
+    max:80
+}
+
+6. enum validator
+allows only specific values.
+role:{
+    type:String,
+    enum:{"user","admin","manager"}
+}
+
+7. unique validator
+creates a unique index so values cannot repeat
+email:{
+    type:String,
+    unique:ture
+}
+
+8. macth validator 
+user regular expression to validator strings.
+email:{
+    type:String,
+    match:[^\S+@\S+\.\S+$,"Please enter a valid email"]
+}
+
+9. vaidate(custom validator)
+you can create your own validation logic.
+for example:
+only even numbers are allowed
+
+age:{
+    type:Number,
+    validate:function(num){
+        return num%2 ==0
+    },
+    message:"Age must be an even number"
+}
+
+==================================================================
+================== Middleware
+
+Validator with Middleware : means checking the correctness of data automatically before saving or updating in the database.
+if the validation fails, middkeware prevents the operation and return an error.
+
+Mongoose provide pre and post middleware.
+
+1. pre middleware runs before an operation happens.
+for example:
+savedfindByIdAndUpdate
+
+User sends data --> Pre-validation middkeware check data --> if valid --> save to database
+
+2. post middleware runs after an operation cimpletes.
+for example:
+logging
+sending email
+
+save data --> Post middleware runs --> logging/notification 
+
+
+
+
+
+
+
+//[============================================================]
+userauth(folder)
+.env
+config/User.js
+controllers/authcontroller.js
+routers/authRoutes.js
+
+====================================================================
+1 user login 
+2 Server create a session
+3 session id stored
+4 
