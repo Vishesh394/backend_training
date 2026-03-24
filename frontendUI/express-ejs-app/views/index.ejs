@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="public/css/style.css">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Hello from EJS!</h1>
+    <h2>good morning</h2>
+    </div>
+    <!-- this will give output based on isLoggedIn object in app.js
+        if is true: then return welcome
+        else return Please Log In
+        -->
+        <!-- IF-ELSE CONDITION -->
+    <% if(isLoggedIn){ 
+    %>
+       <h3><b>welcome</b></h3>
+    <% }
+    else{%>
+        <h3>PLease Log In</h3>
+    <% } %>
+
+    <!----------------------------------------------------------->
+        <!-- displaying the users  -->
+    <ul>
+        <% users.forEach(user=>{%>
+        <li><%=users %></li>
+        
+        <%})%>
+    </ul>
+</body>
+</html>

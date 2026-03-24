@@ -1,0 +1,103 @@
+//popular express template engine:
+
+
+EJS(Embedded javascript)template: 
+create new folder
+express-ejs-app(folder)
+
+create a file: app.js(file)
+
+on terminal:
+
+npm init -y (it will create package.json file)
+package.json: give info for folder, version and file to execute
+
+now, npm i express ejs
+
+now,
+app.js:
+const express=require("express")
+const app=express()
+
+//view from MVC: Model View Controller
+//for small level: we can
+app.set('view engine', 'ejs')
+app.get("/", (req,res)=>{
+    res.render('index')
+})
+app.listen(5000,()=>console.log("Server is running on http://localhost/5000"))
+
+now, view(folder)/index.ejs(file):
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Hello from EJS!</h1>
+</body>
+</html>
+
+#we can add the content in ejs file and render it with the help of express rending.
+
+passing data:
+const express=require("express")
+const app=express()
+
+app.set('view engine','ejs')
+app.get("/", (req,res)=>{
+    res.render('index'{fullname: "Pankaj"})
+})
+app.listen(5000,()=>console.log("Server is running on http://localhost:5000"))
+
+Now, index.ejs: 
+
+
+conditions:
+app.js:
+
+const express=require("express")
+const app=express()
+
+app.set('view engine','ejs')
+app.get("/", (req,res)=>{
+    res.render('index',{fullname: "Pankaj"})
+    res.render('index',{isLoggedIn:true})  //conditions 
+
+})
+app.listen(5000,()=>console.log("Server is running on http://localhost:5000"))
+
+#NOTE :
+<% %> → logic
+<%= → show data
+
+now,passing array: in app.js(file):
+
+const express=require("express")
+const app=express()
+
+app.set('view engine','ejs')
+app.get("/", (req,res)=>{
+    //res.render('index',{fullname: "Pankaj"})
+    //res.render('index',{isLoggedIn:true})  //conditions 
+    res.render('index',{users:['rahul','vikas','ajay','rohan']})
+})
+app.listen(5000,()=>console.log("Server is running on http://localhost:5000"))
+
+=---------------------------------------------------
+app.js-> sends data
+ejs : use data (or implement data)
+----------------------------------------------------
+
+create: public(folder)/ css(folder)/ style.css
+h1{
+    text-align: center;
+    color: red;
+}
+h2{
+    text-align: center;
+    color: black;
+    background-color: aqua;
+}

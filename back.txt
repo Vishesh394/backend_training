@@ -663,3 +663,11 @@ routers/authRoutes.js
 2 Server create a session
 3 session id stored
 4 
+
+
+
+
+===========================================================================
+template engine: used with express js for frontend 
+
+
