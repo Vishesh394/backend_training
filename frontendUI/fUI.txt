@@ -69,10 +69,37 @@ app.get("/", (req,res)=>{
 })
 app.listen(5000,()=>console.log("Server is running on http://localhost:5000"))
 
+Noe index.ejs: checking for the condition:(if-else)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Hello from EJS!</h1>
+    <!-- this will give output based on isLoggedIn object in app.js
+        if is true: then return welcome
+        else return Please Log In
+        -->
+        <!-- IF-ELSE CONDITION -->
+    <% if(isLoggedIn){ 
+    %>
+       <h3><b>welcome</b></h3>
+    <% }
+    else{%>
+        <h3>PLease Log In</h3>
+    <% } %>
+</body>
+</html>
+
+
 #NOTE :
+there will be problem arises with the comments in .ejs file (so don't use comments)
 <% %> → logic
 <%= → show data
-
+-------------------------------------------
 now,passing array: in app.js(file):
 
 const express=require("express")
@@ -101,3 +128,110 @@ h2{
     color: black;
     background-color: aqua;
 }
+
+# add link to index.ejs and also app.use in app.js: 
+ 
+index.ejs:
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="public/css/style.css">
+    <title>Home</title>
+</head>
+
+<body>
+    <h1>Hello from EJS!</h1>
+    <h2>good morning</h2>
+    </div>
+    <ul>
+        <% users.forEach(user=>{%>
+            <li>
+                <%=users %>
+            </li>
+            <%})%>
+    </ul>
+</body>
+
+</html>
+
+in app.js: add this 
+app.use(express.static("public"));
+------------------------------------
+#adding images: 
+
+now, in public folder: 
+create: images(folder)
+
+
+now, views/partials(folder):
+header.ejs
+footer.ejs
+
+
+<%= %>  (for output)
+<% %> (for logic)
+<%- %> (for raw html)
+
+now, installing bootstrap:
+npm i bootstrap:
+find bootstrap in node modules -> dist(folder)-> css(folder)-> bootstrap.min.css
+                                              -> js(folder)-> bootstrap.bundle.min.js
+add in index.ejs:
+inside head: <link rel="stylesheet" href="css/bootstrap.min.css">
+
+outside body: <script src="js/bootstrap.bundle.min.js"></script>
+
+now, we are gonna adding the nav bar using bootstrap: 
+first, 
+views/about.ejs
+views/contact.ejs
+views/services.ejs
+
+now, copy predefined component for nav bar from bootstrap.
+then 
+add content in about.ejs , services.ejs , contact.ejs with both header and footer
+
+now, in app.js 
+add routing for each page(or component)
+
+and import bootstrap:
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist')))
+
+## therefore in: app.js
+const express = require("express")
+const path = require("path")
+const app = express()
+
+//view from MVC: Model View Controller
+//for small level: we can
+app.set('view engine', 'ejs')
+app.use(express.static('public'))
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist')))
+
+app.get("/", (req, res) => {
+    // res.render('index',{fullname: "Pankaj"})
+    // res.render('index',{isLoggedIn:true})  //conditions 
+
+    //passing array instead of a normal variable:
+    res.render('index', { users: ['rahul', 'vikas', 'ajay', 'rohan'] })
+
+})
+
+app.get("/about", (req, res) => {
+    res.render('about')
+})
+
+app.get("/services", (req, res) => {
+    res.render('services')
+})
+
+app.get("/contact", (req, res) => {
+    res.render('contact')
+})
+
+app.listen(3000, () => console.log("Server is running on http://localhost:3000"))
+
+

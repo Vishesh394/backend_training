@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Home</title>
 </head>
-<body>
-    <h1>Hello from EJS!</h1>
-    <h2>good morning</h2>
-    </div>
-    <!-- this will give output based on isLoggedIn object in app.js
-        if is true: then return welcome
-        else return Please Log In
-        -->
-        <!-- IF-ELSE CONDITION -->
-    <% if(isLoggedIn){ 
-    %>
-       <h3><b>welcome</b></h3>
-    <% }
-    else{%>
-        <h3>PLease Log In</h3>
-    <% } %>
 
-    <!----------------------------------------------------------->
-        <!-- displaying the users  -->
-    <ul>
-        <% users.forEach(user=>{%>
-        <li><%=users %></li>
-        
-        <%})%>
-    </ul>
+<body>
+    <%- include('partials/header') %>
+    <main>
+        <section>
+            <h1>Welcome to My Website</h1>
+            <h2>A simple project built for learning and practice</h2>
+            <p>This page shows how Express and EJS can work together to create something clean, reusable, and easy to understand.</p>
+            <ul>
+                <% users.forEach(user => { %>
+                    <li><%= user %></li>
+                <% }) %>
+            </ul>
+        </section>
+
+        <section>
+            <div>
+                <img src="/images/image.jpg" alt="Website preview" width="300">
+            </div>
+        </section>
+    </main>
+    <%- include('partials/footer') %>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
